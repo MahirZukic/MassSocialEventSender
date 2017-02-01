@@ -6,7 +6,8 @@
 var mongoose = require('mongoose'),
 	passport = require('passport'),
 	User = mongoose.model('User'),
-	_ = require('lodash');
+	_ = require('lodash'),
+    flash = require('connect-flash');
 
 /**
  * Get the error message from error object
@@ -208,6 +209,9 @@ exports.oauthCallback = function(strategy) {
 	return function(req, res, next) {
 		passport.authenticate(strategy, function(err, user, redirectURL) {
 			if (err || !user) {
+				if (process.env.NODE_ENV == 'development') {
+                    req.flash('error', err.stack);
+                }
 				return res.redirect('/#!/signin');
 			}
 			req.login(user, function(err) {
