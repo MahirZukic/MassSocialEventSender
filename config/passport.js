@@ -22,6 +22,12 @@ module.exports = function() {
 
 	// Initialize strategies
 	config.getGlobbedFiles('./config/strategies/**/*.js').forEach(function(strategy) {
+		var provider = strategy.substr(strategy.lastIndexOf('/')+1);
+		provider = provider.substr(0, provider.lastIndexOf('.'));
+		if (config[provider] && config[provider].enabled && config[provider].callbackURL &&
+			config[provider].clientID && config[provider].clientSecret) {
+            config.addProvider(provider)
+        }
 		require(path.resolve(strategy))();
 	});
 };

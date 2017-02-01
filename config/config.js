@@ -74,3 +74,18 @@ module.exports.getCSSAssets = function() {
 	var output = this.getGlobbedFiles(this.assets.lib.css.concat(this.assets.css), 'public/');
 	return output;
 };
+
+/**
+ * Get the available social networks from configuration
+ */
+var $_global_providers = [];
+module.exports.getProviders = function() {
+	return $_global_providers;
+};
+
+/**
+ * Add a provider to a configuration
+ */
+module.exports.addProvider = function(provider) {
+	return $_global_providers.push(provider);
+};

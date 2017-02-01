@@ -219,7 +219,10 @@ exports.oauthCallback = function(strategy) {
 					return res.redirect('/#!/signin');
 				}
 
-				return res.redirect(redirectURL && redirectURL.length && redirectURL  || '/#!');
+				// TODO: get this from a main configuration or a map configuration by injecting rootUrl to the map structure
+				var rootUrl = '/#!/socialevents';
+
+				return res.redirect(redirectURL && redirectURL.length && redirectURL  || rootUrl || '/#!');
 			});
 		})(req, res, next);
 	};

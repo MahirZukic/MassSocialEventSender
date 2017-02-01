@@ -22,6 +22,10 @@ var SocialEventSchema = new Schema({
 		type: Array,
 		default: []
 	},
+	autosend: {
+		type: Boolean,
+		default: false
+	},
 	title: {
 		type: String,
 		default: '',

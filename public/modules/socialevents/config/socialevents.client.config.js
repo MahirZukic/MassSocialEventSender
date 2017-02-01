@@ -1,6 +1,6 @@
 'use strict';
 
-// Configuring the Articles module
+// Configuring the SocialEvents module
 angular.module('socialevents').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items

@@ -3,7 +3,7 @@
 // Setting up route
 angular.module('socialevents').config(['$stateProvider',
 	function($stateProvider) {
-		// Articles state routing
+		// SocialEvents state routing
 		$stateProvider.
 		state('listSocialEvents', {
 			url: '/socialevents',
@@ -14,11 +14,11 @@ angular.module('socialevents').config(['$stateProvider',
 			templateUrl: 'modules/socialevents/views/create-socialevent.client.view.html'
 		}).
 		state('viewSocialEvent', {
-			url: '/socialevents/:articleId',
+			url: '/socialevents/:socialeventId',
 			templateUrl: 'modules/socialevents/views/view-socialevent.client.view.html'
 		}).
 		state('editSocialEvent', {
-			url: '/socialevents/:articleId/edit',
+			url: '/socialevents/:socialeventId/edit',
 			templateUrl: 'modules/socialevents/views/edit-socialevent.client.view.html'
 		});
 	}
