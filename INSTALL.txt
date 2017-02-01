@@ -1,0 +1,2 @@
+To install the dependencies for this project, type 'npm install'.
+

@@ -1,0 +1,44 @@
+<section data-ng-controller="HomeController">
+	<div class="jumbotron text-center">
+		<div class="row">
+			<div class="col-md-4">
+				<img alt="HTML5" class="img-responsive center-block" src="modules/core/img/brand/HTML5_Logo_256.png" />
+			</div>
+			<div class="col-md-8">
+				<h1>The HTML story is still being written.</h1> 
+				<h2><em>Come hear the latest chapter at the HTML5 Denver User Group.</em></h2>
+			</div>
+		</div>
+	</div>
+
+	<div class="row center-block event" 
+	     itemscope 
+	     itemtype="http://data-vocabulary.org/Event"
+	     ng-controller="EventsController"
+	     ng-show="event">
+	    <span itemprop="eventType" 
+	          style="display:none;">Meetup</span> 
+		<time class="event-date" 
+		      itemprop="startDate" 
+		      datetime="{{event.time | date:'yyyy-MM-ddTHH:mm:ss:Z'}}">{{event.time | date:'EEEE, MMMM, d, yyyy'}}</time>
+		<h3 class="event-title"><a href="{{event.event_url}}" itemprop="url"><span itemprop="summary">{{event.name}}</span></a></h3>
+		<div class="col-md-4">
+			<h4>When</h4>
+			<p>{{event.time | date:'h a'}}</p>
+			<h4>Where</h4>
+			<address itemprop="location" 
+			         itemscope 
+			         itemtype="http://data-vocabulary.org/​Organization">
+				<span itemprop="name">{{event.venue.name}}</span><br>
+				<span itemprop="address" 
+				      itemscope 
+				      itemtype="http://data-vocabulary.org/Address">
+					<span itemprop="street-address">{{event.venue.address_1}}</span><br>	 
+					<span itemprop="locality">{{event.venue.city}}</span>, <span itemprop="region">{{event.venue.state}}</span><br>
+				</span>
+			</address>
+		</div>
+
+		<div class="col-md-8" itemprop="description" ng-bind-html="event.description"></div>
+	</div>
+</section>
