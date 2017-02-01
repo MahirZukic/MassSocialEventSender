@@ -2,7 +2,7 @@
   "name": "MassSocialEventSender",
   "description": "Mean application used to share a link or content on multiple social networks at once.\nFull-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js",
   "version": "0.0.1",
-  "author": "Mahir Zukic, Scott Davis",
+  "author": "Mahir Zukic, Scott Davis - initial template",
   "engines": {
     "node": "0.10.x",
     "npm": "1.4.x"

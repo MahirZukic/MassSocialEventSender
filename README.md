@@ -1,5 +1,4 @@
-# MassSocialEventSender
-Mean application used to share a link or content on multiple social networks at once.
+# MassSocialEventSender - Mean application used to share a link or content on multiple social networks at once.
 =======
 [![MEAN.JS Logo](http://meanjs.org/img/logo-small.png)](http://meanjs.org/)
 

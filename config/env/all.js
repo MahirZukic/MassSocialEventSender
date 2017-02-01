@@ -2,8 +2,8 @@
 
 module.exports = {
 	app: {
-        title: 'HTML5 Denver',
-        description: 'HTML5 Denver User Group',
+        title: 'MassSocialEventSender',
+        description: 'Mean application used to share a link or content on multiple social networks at once.',
         keywords: 'MongoDB, Express, AngularJS, Node.js'
 	},
 	port: process.env.PORT || 3000,

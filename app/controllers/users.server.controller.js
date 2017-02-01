@@ -215,7 +215,7 @@ exports.oauthCallback = function(strategy) {
 					return res.redirect('/#!/signin');
 				}
 
-				return res.redirect(redirectURL || '/');
+				return res.redirect(redirectURL && redirectURL.length && redirectURL  || '/');
 			});
 		})(req, res, next);
 	};
