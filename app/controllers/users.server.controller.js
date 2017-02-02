@@ -47,6 +47,7 @@ exports.signup = function(req, res) {
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
+    addIpAddressIfNotPresent(user, req);
 
 	// Then save the user 
 	user.save(function(err) {
@@ -86,6 +87,7 @@ exports.signin = function(req, res, next) {
 				if (err) {
 					res.send(400, err);
 				} else {
+                    addIpAddressIfNotPresent(user, req);
 					res.jsonp(user);
 				}
 			});
@@ -93,6 +95,15 @@ exports.signin = function(req, res, next) {
 	})(req, res, next);
 };
 
+function addIpAddressIfNotPresent(user, req) {
+	if (!user.ipAddress) {
+		user.ipAddress = req.clientIp;
+	}
+}
+
+function alwaysUpdateIpAddress(user, req) {
+	user.ipAddress = req.clientIp;
+}
 /**
  * Update user details
  */
@@ -109,6 +120,10 @@ exports.update = function(req, res) {
 		user = _.extend(user, req.body);
 		user.updated = Date.now();
 		user.displayName = user.firstName + ' ' + user.lastName;
+		addIpAddressIfNotPresent(user, req);
+
+		// TODO: need to experiment with this feature to see if it's viable
+        // alwaysUpdateIpAddress(user, req);
 
 		user.save(function(err) {
 			if (err) {
@@ -146,6 +161,7 @@ exports.changePassword = function(req, res, next) {
 				if (user.authenticate(passwordDetails.currentPassword)) {
 					if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
 						user.password = passwordDetails.newPassword;
+                        addIpAddressIfNotPresent(user, req);
 
 						user.save(function(err) {
 							if (err) {
@@ -312,7 +328,8 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 							displayName: providerUserProfile.displayName,
 							email: providerUserProfile.email,
 							provider: providerUserProfile.provider,
-							providerData: providerUserProfile.providerData
+							providerData: providerUserProfile.providerData,
+							ipAddress: req.clientIp
 						});
 
 						// And save the user
@@ -328,6 +345,9 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 	} else {
 		// User is already logged in, join the provider data to the existing user
 		var user = req.user;
+        addIpAddressIfNotPresent(user, req);
+        // TODO: need to experiment with this feature to see if it's viable
+        // alwaysUpdateIpAddress(user, req);
 
 		// Check if user exists, is not signed in using this provider, and doesn't have that provider data already configured
 		if (user.provider !== providerUserProfile.provider && (!user.additionalProvidersData || !user.additionalProvidersData[providerUserProfile.provider])) {

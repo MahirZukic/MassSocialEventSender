@@ -18,7 +18,8 @@ var express = require('express'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
-	path = require('path');
+	path = require('path'),
+    requestIp = require('request-ip');
 
 module.exports = function(db) {
 	// Initialize express app
@@ -76,6 +77,9 @@ module.exports = function(db) {
 	app.use(bodyParser.urlencoded());
 	app.use(bodyParser.json());
 	app.use(methodOverride());
+
+	// use requestIp middleware for getting IP address of users for geolocation purposes
+    app.use(requestIp.mw());
 
 	// Enable jsonp
 	app.enable('jsonp callback');
