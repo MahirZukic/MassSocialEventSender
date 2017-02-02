@@ -36,5 +36,5 @@ module.exports = {
         enabled: false
 	},
 	// every x minutes try to send the saved requests to social networks
-	socialSendingInterval: 10
+	socialSendingInterval: 1
 };

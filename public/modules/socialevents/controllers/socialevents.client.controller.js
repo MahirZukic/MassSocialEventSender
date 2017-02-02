@@ -4,6 +4,7 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
 	function($scope, $stateParams, $location, Authentication, SocialEvents) {
         // TODO: need to add lodash(_) module dependency to all client controllers
 		$scope.authentication = Authentication;
+		// TODO: fix the availableProviders, they don't work now
 		$scope.availableProviders = [{name: 'facebook', enabled: false}, {name: 'twitter', enabled: false},
             {name: 'google', enabled: false}, {name: 'linkedin', enabled: false}, {name: 'meetup', enabled: false}];
 
@@ -92,6 +93,15 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
 			});
             $scope.getOrResetAvailableProviders();
 		};
+
+		$scope.send = function () {
+            $scope.socialevent.bestTimeToSend = Date.now();
+            $scope.socialevent.$save(function(response) {
+                $location.path('socialevents/' + response._id);
+            }, function(errorResponse) {
+                $scope.error = errorResponse.data.message;
+            });
+        };
 
 		$scope.getProviders = function() {
 			$scope.availableProviders = [{name: 'facebook', enabled: false}, {name: 'twitter', enabled: false},

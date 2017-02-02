@@ -16,11 +16,20 @@ var SocialEventSchema = new Schema({
 	},
 	sent: {
 		type: Date,
-		default: null
+		default: -1
+	},
+	isSent: {
+		type: Boolean,
+		default: false
+	},
+	bestTimeToSend: {
+		type: Date,
+		default: -1
 	},
 	providers: {
 		type: Array,
-		default: []
+		default: [],
+		required: 'You have to select at least one social network'
 	},
 	autosend: {
 		type: Boolean,
@@ -35,12 +44,20 @@ var SocialEventSchema = new Schema({
 	content: {
 		type: String,
 		default: '',
-		trim: true
+		trim: true,
+        required: 'Content cannot be blank'
 	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
 	}
 });
+SocialEventSchema.add({ isSent: 'Boolean' });
+SocialEventSchema.index( {user : 1, created: 2 }, {unique:true, background:true, w:1} );
+
+SocialEventSchema.pre('save', function (next) {
+    if (!this.created) this.created = new Date;
+    next();
+})
 
 mongoose.model('SocialEvent', SocialEventSchema);

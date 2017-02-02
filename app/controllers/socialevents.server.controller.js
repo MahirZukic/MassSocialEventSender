@@ -50,14 +50,14 @@ exports.create = function(req, res) {
 };
 
 /**
- * Show the current article
+ * Show the current SocialEvent
  */
 exports.read = function(req, res) {
 	res.jsonp(req.socialevent);
 };
 
 /**
- * Update a article
+ * Update a SocialEvent
  */
 exports.update = function(req, res) {
 	var socialevent = req.socialevent;
@@ -76,7 +76,7 @@ exports.update = function(req, res) {
 };
 
 /**
- * Delete an article
+ * Delete an SocialEvent
  */
 exports.delete = function(req, res) {
 	var socialevent = req.socialevent;
@@ -93,7 +93,7 @@ exports.delete = function(req, res) {
 };
 
 /**
- * List of Articles
+ * List of SocialEvents
  */
 exports.list = function(req, res) {
     SocialEvent.find().sort('-created').populate('user', 'displayName').exec(function(err, socialevents) {
@@ -108,7 +108,7 @@ exports.list = function(req, res) {
 };
 
 /**
- * Article middleware
+ * SocialEvent middleware
  */
 exports.socialeventByID = function(req, res, next, id) {
     SocialEvent.findById(id).populate('user', 'displayName').exec(function(err, socialevent) {
@@ -120,7 +120,7 @@ exports.socialeventByID = function(req, res, next, id) {
 };
 
 /**
- * Article authorization middleware
+ * SocialEvent authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
 	if (req.socialevent.user.id !== req.user.id) {
