@@ -5,7 +5,8 @@
  */
 var config = require('./config'),
     facebook = require('fb'),
-    twitter = require('twitter');
+    twitter = require('twitter'),
+    googleapis = require('googleapis');
 
 module.exports.facebook = function(post, user, callback, error) {
 	var accessToken;
@@ -86,4 +87,36 @@ module.exports.twitter = function(post, user, callback, errorCallback) {
         }
         callback(response);
     });
+};
+
+module.exports.google = function(post, user, callback, errorCallback) {
+    var consumerKey = config['google'].clientID,
+        consumerSecret = config['google'].clientSecret,
+        redirect_uri = config['google'].callbackURL,
+        OAuth2 = googleapis.auth.OAuth2,
+        oauth2Client = new OAuth2(consumerKey, consumerSecret, redirect_uri);
+        var scopes = ['https://www.googleapis.com/auth/plus.me'];
+        var url = oauth2Client.generateAuthUrl({
+            access_type: 'offline',
+            scope: scopes.join(" ") // space delimited string of scopes
+        });
+        oauth2Client.getToken(code, function(err, tokens) {
+            // contains an access_token and optionally a refresh_token.
+            // save them permanently.
+        });
+        // TODO: figure out how to get this
+        oauth2Client.credentials = {
+            access_token: 'ACCESS TOKEN HERE',
+            refresh_token: 'REFRESH TOKEN HERE'
+        };
+        client
+            .plus.people.get({ userId: 'me' })
+            .withAuthClient(oauth2Client)
+            .execute(function (error, results) {
+                if (error) {
+                    errorCallback(error);
+                } else {
+                    callback(results);
+                }
+            });
 };
