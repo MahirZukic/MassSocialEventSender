@@ -8,6 +8,11 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
 		$scope.availableProviders = [{name: 'facebook', enabled: false}, {name: 'twitter', enabled: false},
             {name: 'google', enabled: false}, {name: 'linkedin', enabled: false}, {name: 'meetup', enabled: false}];
 
+		$scope.useFacebook = false || Authentication.user.autoFacebookEnabledByDefault;
+		$scope.useTwitter = false || Authentication.user.autoTwitterEnabledByDefault;
+		$scope.useGoogle = false || Authentication.user.autoGoogleEnabledByDefault;
+        $scope.autosend = false || Authentication.user.autoAutoSendEnabledByDefault
+
         $scope.resetAvailableProvidersToUnused = function() {
             // $.each($scope.availableProviders, function (item) {
 				// if (item.enabled) {
@@ -34,20 +39,28 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
         }
 
 		$scope.create = function() {
-			// TODO: change this to use the required fields for SocialEvent
+            // TODO: change this to use lodash
+            var providers = [{name: 'facebook', value: $scope.useFacebook}, {
+                name: 'twitter',
+                value: $scope.useTwitter
+            }, {name: 'google', value: $scope.useGoogle}].map(function (item) {
+            	if (item.value) {
+            		return item.name;
+				}
+            });
 			var socialevent = new SocialEvents({
 				title: this.title,
-				content: this.content,
-				providers: this.providers,
-                autosend: this.autosend,
-                isSent: this.isSent,
-                sent: this.sent,
+				// content: this.content,
+				providers: providers,
+                autosend: $scope.autosend,
+                isSent: false,
+                sent: null,
                 bestTimeToSend: null
 			});
             socialevent.$save(function(response) {
 				$location.path('socialevents');
 			}, function(errorResponse) {
-				$scope.error = errorResponse.data;
+				$scope.error = errorResponse.data.message;
 			});
 		};
 

@@ -85,6 +85,22 @@ var UserSchema = new Schema({
 	ipAddress: {
         type: String,
         default: ''
+	},
+    autoFacebookEnabledByDefault: {
+        type: Boolean,
+        default: false
+	},
+	autoTwitterEnabledByDefault: {
+        type: Boolean,
+        default: false
+	},
+    autoGoogleEnabledByDefault: {
+        type: Boolean,
+        default: false
+	},
+    autoAutoSendEnabledByDefault: {
+        type: Boolean,
+        default: false
 	}
 });
 

@@ -1,6 +1,6 @@
 <section class="row" data-ng-controller="SettingsController">
 	<h3 class="col-md-12 text-center">Edit your profile</h3>
-	<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2">
+	<div class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-3">
 		<form data-ng-submit="updateUserProfile()" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
 				<div class="form-group">
@@ -18,6 +18,51 @@
 				<div class="form-group">
 					<label for="username">Username</label>
 					<input type="text" id="username" name="username" class="form-control" data-ng-model="user.username" placeholder="Username">
+				</div>
+				<!--TODO: make these switches work-->
+				<div class="form-group">
+					<label for="username">Automatically enable Facebook</label>
+					<div class="onoffswitch">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="autoFacebookEnabledByDefault" data-ng-model="user.autoFacebookEnabledByDefault" checked>
+						<label class="onoffswitch-label" for="autoFacebookEnabledByDefault">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+					</div>
+					<!--<input type="checkbox" id="autoFacebookEnabledByDefault" name="autoFacebookEnabledByDefault" data-ng-model="user.autoFacebookEnabledByDefault">-->
+				</div>
+				<div class="form-group">
+					<label for="username">Automatically enable Twitter</label>
+					<div class="onoffswitch">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="autoTwitterEnabledByDefault" data-ng-model="user.autoTwitterEnabledByDefault" checked>
+						<label class="onoffswitch-label" for="autoTwitterEnabledByDefault">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+					</div>
+					<!--<input type="checkbox" id="autoTwitterEnabledByDefault" name="autoTwitterEnabledByDefault" data-ng-model="user.autoTwitterEnabledByDefault">-->
+				</div>
+				<div class="form-group">
+					<label for="username">Automatically enable Google</label>
+					<div class="onoffswitch">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="autoGoogleEnabledByDefault" data-ng-model="user.autoGoogleEnabledByDefault" checked>
+						<label class="onoffswitch-label" for="autoGoogleEnabledByDefault">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+					</div>
+					<!--<input type="checkbox" id="autoGoogleEnabledByDefault" name="autoGoogleEnabledByDefault" data-ng-model="user.autoGoogleEnabledByDefault">-->
+				</div>
+				<div class="form-group">
+					<label for="username">Automatically enable auto schedule</label>
+					<div class="onoffswitch">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="autoSendEnabledByDefault" data-ng-model="user.autoAutoSendEnabledByDefault" checked>
+						<label class="onoffswitch-label" for="autoSendEnabledByDefault">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+					</div>
+					<!--<input type="checkbox" id="autoSendEnabledByDefault" name="autoSendEnabledByDefault" data-ng-model="user.autoSendEnabledByDefault">-->
 				</div>
 				<div class="text-center form-group">
 					<button type="submit" class="btn btn-large btn-primary">Save Profile</button>

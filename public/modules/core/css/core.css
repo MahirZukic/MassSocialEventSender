@@ -20,3 +20,7 @@
     margin-top: 0;
 }
 
+div#submit.pull-down-button {
+    margin-top: 13px;
+}
+

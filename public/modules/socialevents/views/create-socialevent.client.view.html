@@ -11,44 +11,108 @@
 						<input type="text" data-ng-model="title" id="title" class="form-control" placeholder="Title" required>
 					</div>
 				</div>
-				<div class="form-group">
+				<!--<div class="form-group">
 					<label class="control-label" for="content">Content</label>
 					<div class="controls">
 						<textarea data-ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
 					</div>
-				</div>
+				</div>-->
 				<!-- TODO: change this to use checkboxes for providers which should be configurable-->
-				<div class="form-group">
-					<label class="control-label" for="content">Providers by checkboxes</label>
-					<div class="controls col-lg-6 col-md-6">
-						<div data-ng-repeat="socialevent in socialevents">
-							<p data-ng-model="name"/>
-							<!-- TODO: fix this so it works -->
-							<input type="checkbox" data-ng-model="enable"/>
+				<div class="row">
+					<div class="form-group col-lg-10 col-md-10">
+						<!--<label class="control-label" for="content">Providers by checkboxes</label>-->
+						<div class="controls">
+							<!--<div data-ng-repeat="socialevent in socialevents">-->
+								<!--<p data-ng-model="name"/>-->
+								<!--<input type="checkbox" data-ng-model="enable"/>-->
+							<!--</div>-->
+							<i class="fa fa-facebook">
+								Facebook
+								<!--<input type="checkbox" data-ng-model="useFacebook" data-toggle="toggle"/>-->
+								<div class="onoffswitch">
+									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="useFacebook" data-ng-model="useFacebook" checked>
+									<label class="onoffswitch-label" for="useFacebook">
+										<span class="onoffswitch-inner"></span>
+										<span class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</i>
+							<i class="fa fa-twitter">
+								Twitter
+								<!--<input type="checkbox" data-ng-model="useTwitter" data-toggle="toggle"/>-->
+								<div class="onoffswitch">
+									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="useTwitter" data-ng-model="useTwitter" checked>
+									<label class="onoffswitch-label" for="useTwitter">
+										<span class="onoffswitch-inner"></span>
+										<span class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</i>
+							<i class="fa fa-google-plus">
+								Google+
+								<!--<input type="checkbox" data-ng-model="useGoogle" data-toggle="toggle"/>-->
+								<div class="onoffswitch">
+									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="useGoogle" data-ng-model="useGoogle" checked>
+									<label class="onoffswitch-label" for="useGoogle">
+										<span class="onoffswitch-inner"></span>
+										<span class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</i>
+							<i class="fa fa-history">
+								Auto schedule
+								<!--<input type="checkbox" data-ng-model="useGoogle" data-toggle="toggle"/>-->
+								<div class="onoffswitch">
+									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="autosend" data-ng-model="autosend" checked>
+									<label class="onoffswitch-label" for="autosend">
+										<span class="onoffswitch-inner"></span>
+										<span class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</i>
+
+							<div id="submit" class="form-group col-lg-3 col-md-3 pull-right col-lg-pull-4 col-md-pull-4 pull-down-button">
+								<input type="submit" class="btn btn-default">
+							</div>
+						</div>
+						<div data-ng-show="error" class="text-danger">
+							<strong data-ng-bind="error"></strong>
 						</div>
 					</div>
-				</div>
 
-				<div class="form-group">
-					<label class="control-label" for="content">Autosend</label>
-					<div class="controls col-lg-12 col-md-12">
-						<!-- TODO: fix this so it works -->
-						<input data-ng-model="autosend" id="autosend" class="" type="checkbox">
+					<!--<div class="form-group col-lg-4 col-md-4">
+						<div class="controls">
+							<i class="fa fa-history">
+								Auto schedule
+							</i>
+
+							&lt;!&ndash;<label class="control-label" for="content">Auto schedule</label>&ndash;&gt;
+							&lt;!&ndash;<div class="controls">&ndash;&gt;
+								&lt;!&ndash;<input data-ng-model="autosend" id="autosend" class="" type="checkbox" data-toggle="toggle">&ndash;&gt;
+							&lt;!&ndash;</div>&ndash;&gt;
+							<div class="onoffswitch">
+								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="autosend" data-ng-model="autosend" checked>
+								<label class="onoffswitch-label" for="autosend">
+									<span class="onoffswitch-inner"></span>
+									<span class="onoffswitch-switch"></span>
+								</label>
+							</div>
+						</div>
+					</div>-->
+
+					<!--<div class="form-group">-->
+						<!--<label class="control-label" for="content">Providers</label>-->
+						<!--<div class="controls">-->
+							<!--<textarea data-ng-model="providers" id="providers" class="form-control" cols="30" rows="10" placeholder="Providers such as Facebook, Twitter, Google, etc."></textarea>-->
+						<!--</div>-->
+					<!--</div>-->
+
+					<!--<div class="form-group col-lg-4 col-md-4">
+						<input type="submit" class="btn btn-default">
 					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="control-label" for="content">Providers</label>
-					<div class="controls">
-						<textarea data-ng-model="providers" id="providers" class="form-control" cols="30" rows="10" placeholder="Providers such as Facebook, Twitter, Google, etc."></textarea>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<input type="submit" class="btn btn-default">
-				</div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
+					<div data-ng-show="error" class="text-danger">
+						<strong data-ng-bind="error"></strong>
+					</div>-->
 				</div>
 			</fieldset>
 		</form>
