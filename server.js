@@ -34,6 +34,7 @@ AsyncPolling(function (end) {
     // Do whatever you want.
     // console.log("Async is fired: " + cnt++);
     var SocialEvent = mongoose.model('SocialEvent');
+    var User = mongoose.model('User');
     var sendingFunctions = {};
     var posts = SocialEvent.find({
         // bestTimeToSend: { $lt: new Date() },
@@ -41,23 +42,38 @@ AsyncPolling(function (end) {
     },'content user title providers' , function(err, posts) {
         if (!err) {
             if (posts) {
-                // callback(possibleUsername);
 				// foreach provider send the corresponding content
                 posts.forEach(function (post) {
-					// console.log(post._id);
-                    if (!post.isSent && post.autosend && post.bestTimeToSend <= Date.now() && post.providers) {
-                        post.providers.forEach(function (provider) {
-                            if (config[provider] && config[provider].clientID && config[provider].clientSecret) {
-                                sendingFunctions[provider](post);
-                            }
-                        });
-                    }
+                    var user = User.findOne({ _id: post.user._id || post.user })
+                        .exec().then(function (user) {
+                        console.log("name: " + user.firstName + " " + user.lastName);
+                        console.log("displayName: " + user.displayName);
+                        if (!post.isSent && post.autosend && post.bestTimeToSend <= Date.now() && post.providers) {
+                            post.providers.forEach(function (provider) {
+                                if (config[provider] && config[provider].clientID && config[provider].clientSecret) {
+                                    sendingFunctions[provider](post, user,
+                                        function (response) {
+                                            user.save();
+                                            post.sent = Date.now();
+                                            post.isSent = true;
+                                            post.save();
+                                        },
+                                        function (response) {
+                                            console.log(response);
+                                        });
+                                }
+                            });
+                        }
+                    },function (error) {
+                        console.log(error);
+                    });
                 });
             } else {
-                // return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
+                // there are no new post to send using auto-schedule method
             }
         } else {
-            // callback(null);
+            // there was an error trying to connect to the database and retrieve data
+            console.log(err);
         }
     }).sort('-created');
     // Then notify the polling when your job is done:
