@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     SocialEvent = mongoose.model('SocialEvent'),
+	User = mongoose.model('User'),
 	_ = require('lodash');
 
 /**
@@ -31,12 +32,24 @@ var getErrorMessage = function(err) {
 	return message;
 };
 
+var calculateBestTimeToSend = function (socialevent, user) {
+	// hard-code this for now
+	var userToSend = User.find();
+	return Date.now();
+};
 /**
  * Create a article
  */
 exports.create = function(req, res) {
 	var socialevent = new SocialEvent(req.body);
     socialevent.user = req.user;
+    socialevent.isSent = null;
+    socialevent.sent = null;
+    if (socialevent.autosend) {
+        socialevent.bestTimeToSend = calculateBestTimeToSend(socialevent, req.user);
+    } else {
+        socialevent.bestTimeToSend = Date.now();
+	}
 
     socialevent.save(function(err) {
 		if (err) {

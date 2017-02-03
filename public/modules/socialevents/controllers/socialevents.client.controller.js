@@ -39,19 +39,16 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
 				title: this.title,
 				content: this.content,
 				providers: this.providers,
-                autosend: this.autosend
+                autosend: this.autosend,
+                isSent: this.isSent,
+                sent: this.sent,
+                bestTimeToSend: null
 			});
             socialevent.$save(function(response) {
-				$location.path('socialevents/' + response._id);
+				$location.path('socialevents');
 			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
+				$scope.error = errorResponse.data;
 			});
-
-			this.title = '';
-			this.content = '';
-			this.providers = '';
-			this.autosend = false;
-            $scope.getOrResetAvailableProviders();
 		};
 
 		$scope.remove = function(socialevent) {

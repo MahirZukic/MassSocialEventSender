@@ -39,19 +39,20 @@ AsyncPolling(function (end) {
     var posts = SocialEvent.find({
         // bestTimeToSend: { $lt: new Date() },
         // isSent: false
-    },'content user title providers' , function(err, posts) {
+    },'content user title providers autosend isSent bestTimeToSend' , function(err, posts) {
         if (!err) {
             if (posts) {
 				// foreach provider send the corresponding content
                 posts.forEach(function (post) {
                     var user = User.findOne({ _id: post.user._id || post.user })
                         .exec().then(function (user) {
-                        console.log("name: " + user.firstName + " " + user.lastName);
-                        console.log("displayName: " + user.displayName);
                         if (!post.isSent && post.autosend && post.bestTimeToSend <= Date.now() && post.providers) {
                             post.providers.forEach(function (provider) {
-                                if (config[provider] && config[provider].clientID && config[provider].clientSecret) {
-                                    sendingFunctions[provider](post, user,
+                                provider = provider.toLowerCase();
+                                if (user.additionalProvidersData[provider] && config[provider] &&
+                                    config[provider].clientID && config[provider].clientSecret) {
+                                    // TODO: implement promises here and everywhere else
+                                    SendingFunctions(provider)(post, user,
                                         function (response) {
                                             user.save();
                                             post.sent = Date.now();
@@ -79,7 +80,7 @@ AsyncPolling(function (end) {
     // Then notify the polling when your job is done:
     end();
     // This will schedule the next call.
-}, config.socialSendingInterval * 1000 * 1).run();
+}, config.socialSendingInterval * 1000 * 4).run();
 
 // Logging initialization
 console.log('MEAN.JS application started on port ' + config.port);

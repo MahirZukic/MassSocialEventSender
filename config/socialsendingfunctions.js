@@ -8,7 +8,7 @@ var config = require('./config'),
     twitter = require('twitter'),
     googleapis = require('googleapis');
 
-module.exports.facebook = function(post, user, callback, error) {
+function facebookFunction(post, user, callback, error) {
 	var accessToken;
     var expires;
     if (user.provider == 'facebook') {
@@ -64,7 +64,7 @@ module.exports.facebook = function(post, user, callback, error) {
 
 };
 
-module.exports.twitter = function(post, user, callback, errorCallback) {
+function twitterFunction(post, user, callback, errorCallback) {
     var consumerKey,
         consumerSecret,
         // TODO: figure out how to get this
@@ -89,10 +89,11 @@ module.exports.twitter = function(post, user, callback, errorCallback) {
     });
 };
 
-module.exports.google = function(post, user, callback, errorCallback) {
+function googleFunction(post, user, callback, errorCallback) {
     var consumerKey = config['google'].clientID,
         consumerSecret = config['google'].clientSecret,
         redirect_uri = config['google'].callbackURL,
+        code,
         OAuth2 = googleapis.auth.OAuth2,
         oauth2Client = new OAuth2(consumerKey, consumerSecret, redirect_uri);
         var scopes = ['https://www.googleapis.com/auth/plus.me'];
@@ -120,3 +121,14 @@ module.exports.google = function(post, user, callback, errorCallback) {
                 }
             });
 };
+
+module.exports = function (provider) {
+    switch (provider) {
+        case 'facebook':
+            return facebookFunction;
+        case 'twitter':
+            return twitterFunction;
+        case 'google':
+            return googleFunction;
+    }
+}

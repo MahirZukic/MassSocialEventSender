@@ -16,7 +16,7 @@ var SocialEventSchema = new Schema({
 	},
 	sent: {
 		type: Date,
-		default: -1
+		default: null
 	},
 	isSent: {
 		type: Boolean,
@@ -24,7 +24,7 @@ var SocialEventSchema = new Schema({
 	},
 	bestTimeToSend: {
 		type: Date,
-		default: -1
+		default: null
 	},
 	providers: {
 		type: Array,
@@ -56,7 +56,9 @@ SocialEventSchema.add({ isSent: 'Boolean' });
 SocialEventSchema.index( {user : 1, created: 2 }, {unique:true, background:true, w:1} );
 
 SocialEventSchema.pre('save', function (next) {
-    if (!this.created) this.created = new Date;
+    this.sent = null;
+    this.sent = this.bestTimeToSend ? this.bestTimeToSend : null;
+    this.isSent = false;
     next();
 })
 
