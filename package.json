@@ -39,6 +39,7 @@
     "passport-local": "~1.0.0",
     "passport-meetup": "^0.1.2",
     "passport-twitter": "~1.0.2",
+    "request": "^2.79.0",
     "request-ip": "^1.2.3",
     "swig": "~1.3.2"
   },
