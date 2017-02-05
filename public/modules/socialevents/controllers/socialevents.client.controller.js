@@ -13,6 +13,8 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
 		$scope.useGoogle = false || Authentication.user.autoGoogleEnabledByDefault;
         $scope.autosend = false || Authentication.user.autoAutoSendEnabledByDefault
 
+        // TODO: dodati client side validaciju za ovo
+
         $scope.resetAvailableProvidersToUnused = function() {
             // $.each($scope.availableProviders, function (item) {
 				// if (item.enabled) {

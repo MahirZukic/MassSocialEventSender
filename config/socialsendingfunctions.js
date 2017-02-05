@@ -45,7 +45,7 @@ function facebookFunction(post, user, callback, error) {
                 user.additionalProvidersData['facebook'].expires = expires;
             }
 
-            FB.api('me/feed', 'post', { message: post.title, link: post.content }, function (response) {
+            FB.api('me/feed', 'post', { message: post.title, link: post.title }, function (response) {
                 if(!response || response.error) {
                     error(response.error);
                 }
@@ -54,7 +54,7 @@ function facebookFunction(post, user, callback, error) {
         });
     } else {
         // no need to extend the expire duration of the token
-        FB.api('me/feed', 'post', { message: post.title, link: post.content }, function (response) {
+        FB.api('me/feed', 'post', { message: post.title, link: post.title }, function (response) {
             if(!response || response.error) {
                 error(response.error);
             }

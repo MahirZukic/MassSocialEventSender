@@ -140,5 +140,27 @@ module.exports = function(db) {
 		});
 	});
 
+//Exit while pressing Ctrl + c
+    process.on("SIGTERM", function(){
+        // global.Logger.info("app exit Ctrl + C: " + app.get("title"));
+        console.log("app exit Ctrl + C: " + app.get("title"));
+        db.disconnect();
+        process.exit();
+    });
+
+//Exit while pressing Ctrl + z
+    process.on("SIGINT", function(){
+        // global.Logger.info("app exit Ctrl + Z: " + app.get("title"));
+        console.log("app exit Ctrl + Z: " + app.get("title"));
+        db.disconnect();
+        process.exit();
+    });
+
+//Log any uncought Exception
+    process.on("uncaughtException", function(err){
+        // global.Logger.crash(err);
+        console.log(err);
+    });
+
 	return app;
 };

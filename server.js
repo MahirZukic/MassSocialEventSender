@@ -46,7 +46,7 @@ AsyncPolling(function (end) {
                 posts.forEach(function (post) {
                     var user = User.findOne({ _id: post.user._id || post.user })
                         .exec().then(function (user) {
-                        if (!post.isSent && post.autosend && post.bestTimeToSend <= Date.now() && post.providers) {
+                        if (!post.isSent /*&& post.autosend*/ && post.bestTimeToSend <= Date.now() && post.providers) {
                             post.providers.forEach(function (provider) {
                                 provider = provider.toLowerCase();
                                 if (user.additionalProvidersData[provider] && config[provider] &&
@@ -60,12 +60,14 @@ AsyncPolling(function (end) {
                                             post.save();
                                         },
                                         function (response) {
+                                            console.log('Could not send the post with id: ' + post._id + ' and userId: ' + post.user._id);
                                             console.log(response);
                                         });
                                 }
                             });
                         }
                     },function (error) {
+                        console.log('Could not send the post with id: ' + post._id + ' and userId: ' + post.user._id);
                         console.log(error);
                     });
                 });

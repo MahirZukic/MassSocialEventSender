@@ -15,12 +15,12 @@ angular.module('events').factory('Events', ['$http',
 
 			 	var request = $http.jsonp(url, {transformResponse: returnFirstElement});
 			 	request.success(function(data, status, headers, config) {
-				    console.log('SUCCESS');
-				    console.log(data);
+				    // console.log('SUCCESS');
+				    // console.log(data);
 				});
 			 	request.error(function(data, status, headers, config) {
-				    console.log('ERROR');
-				    console.log(data);
+				    // console.log('ERROR');
+				    // console.log(data);
 				});
 
 			 	return request;
