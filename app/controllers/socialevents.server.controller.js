@@ -109,7 +109,7 @@ exports.delete = function(req, res) {
  * List of SocialEvents
  */
 exports.list = function(req, res) {
-    SocialEvent.find({user: {_id: req.user._id}}).sort('-created').populate('user', 'displayName').exec(function (err, socialevents) {
+    SocialEvent.find({user: {_id: req.user._id}}).limit(10).sort('-created').populate('user', 'displayName').exec(function (err, socialevents) {
 		if (err) {
 			return res.send(400, {
 				message: getErrorMessage(err)

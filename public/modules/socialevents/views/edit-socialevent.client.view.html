@@ -11,24 +11,12 @@
 						<input type="text" data-ng-model="socialevent.title" id="title" class="form-control" placeholder="Title" required>
 					</div>
 				</div>
-				<!--<div class="form-group">
-					<label class="control-label" for="content">Content</label>
-					<div class="controls">
-						<textarea data-ng-model="socialevent.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
-					</div>
-				</div>-->
 				<!-- TODO: change this to use checkboxes for providers which should be configurable-->
 				<div class="row">
 					<div class="form-group col-lg-10 col-md-10">
-						<!--<label class="control-label" for="content">Providers by checkboxes</label>-->
 						<div class="controls">
-							<!--<div data-ng-repeat="socialevent in socialevents">-->
-							<!--<p data-ng-model="name"/>-->
-							<!--<input type="checkbox" data-ng-model="enable"/>-->
-							<!--</div>-->
 							<i class="fa fa-facebook">
 								Facebook
-								<!--<input type="checkbox" data-ng-model="useFacebook" data-toggle="toggle"/>-->
 								<div class="onoffswitch">
 									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="useFacebook" data-ng-model="useFacebook" checked>
 									<label class="onoffswitch-label" for="useFacebook">
@@ -39,7 +27,6 @@
 							</i>
 							<i class="fa fa-twitter">
 								Twitter
-								<!--<input type="checkbox" data-ng-model="useTwitter" data-toggle="toggle"/>-->
 								<div class="onoffswitch">
 									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="useTwitter" data-ng-model="useTwitter" checked>
 									<label class="onoffswitch-label" for="useTwitter">
@@ -50,7 +37,6 @@
 							</i>
 							<i class="fa fa-google-plus">
 								Google+
-								<!--<input type="checkbox" data-ng-model="useGoogle" data-toggle="toggle"/>-->
 								<div class="onoffswitch">
 									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="useGoogle" data-ng-model="useGoogle" checked>
 									<label class="onoffswitch-label" for="useGoogle">
@@ -61,7 +47,6 @@
 							</i>
 							<i class="fa fa-history">
 								Auto schedule
-								<!--<input type="checkbox" data-ng-model="useGoogle" data-toggle="toggle"/>-->
 								<div class="onoffswitch">
 									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="autosend" data-ng-model="socialevent.autosend" checked>
 									<label class="onoffswitch-label" for="autosend">
@@ -75,6 +60,7 @@
 								<input type="submit" class="btn btn-default">
 							</div>
 						</div>
+					</div>
 				</div>
 			</fieldset>
 		</form>
