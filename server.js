@@ -78,7 +78,7 @@ AsyncPolling(function (end) {
             // there was an error trying to connect to the database and retrieve data
             console.log(err);
         }
-    }).sort('-created');
+    }).sort('-created').populate('user');
     // Then notify the polling when your job is done:
     end();
     // This will schedule the next call.

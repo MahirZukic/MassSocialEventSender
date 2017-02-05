@@ -9,7 +9,7 @@ var users = require('../../app/controllers/users'),
 module.exports = function(app) {
 	// SocialEvents Routes
 	app.route('/socialevents')
-		.get(socialevents.list)
+		.get(users.requiresLogin, socialevents.list)
 		.post(users.requiresLogin, socialevents.create);
 
 	app.route('/socialevents/:socialeventId')
@@ -20,6 +20,6 @@ module.exports = function(app) {
     // app.route('/socialevents/providers')
     //     .get(config.getProviders());
 
-	// Finish by binding the article middleware
+	// Finish by binding the SocialEvent middleware
 	app.param('socialeventId', socialevents.socialeventByID);
 };

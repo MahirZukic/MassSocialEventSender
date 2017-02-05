@@ -8,29 +8,19 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
 		$scope.availableProviders = [{name: 'facebook', enabled: false}, {name: 'twitter', enabled: false},
             {name: 'google', enabled: false}, {name: 'linkedin', enabled: false}, {name: 'meetup', enabled: false}];
 
-		$scope.useFacebook = false || Authentication.user.autoFacebookEnabledByDefault;
-		$scope.useTwitter = false || Authentication.user.autoTwitterEnabledByDefault;
-		$scope.useGoogle = false || Authentication.user.autoGoogleEnabledByDefault;
-        $scope.autosend = false || Authentication.user.autoAutoSendEnabledByDefault
+		$scope.useFacebook = false || Authentication.user && Authentication.user.autoFacebookEnabledByDefault;
+		$scope.useTwitter = false || Authentication.user && Authentication.user.autoTwitterEnabledByDefault;
+		$scope.useGoogle = false || Authentication.user && Authentication.user.autoGoogleEnabledByDefault;
+        $scope.autosend = false || Authentication.user && Authentication.user.autoSendEnabledByDefault
 
         // TODO: dodati client side validaciju za ovo
 
         $scope.resetAvailableProvidersToUnused = function() {
-            // $.each($scope.availableProviders, function (item) {
-				// if (item.enabled) {
-            //         item.enabled = false;
-            //     }
-            // });
 			for (var index in $scope.availableProviders) {
                 if ($scope.availableProviders[index].enabled) {
                     $scope.availableProviders[index].enabled = false;
                 }
 			}
-            // forEach($scope.availableProviders, function (item) {
-            //     if (item.enabled) {
-            //         item.enabled = false;
-            //     }
-            // });
         }
 
         $scope.getOrResetAvailableProviders = function() {
@@ -42,14 +32,7 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
 
 		$scope.create = function() {
             // TODO: change this to use lodash
-            var providers = [{name: 'facebook', value: $scope.useFacebook}, {
-                name: 'twitter',
-                value: $scope.useTwitter
-            }, {name: 'google', value: $scope.useGoogle}].map(function (item) {
-            	if (item.value) {
-            		return item.name;
-				}
-            });
+            var providers = $scope.getProviders();
 			var socialevent = new SocialEvents({
 				title: this.title,
 				// content: this.content,
@@ -84,7 +67,9 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
 		};
 
 		$scope.update = function() {
+            var providers = $scope.getProviders();
 			var socialevent = $scope.socialevent;
+			socialevent.providers = providers;
 
             socialevent.$update(function() {
 				$location.path('socialevents/' + socialevent._id);
@@ -103,6 +88,12 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
 			$scope.socialevent = SocialEvents.get({
                 socialeventId: $stateParams.socialeventId
 			});
+            $scope.socialevent.$promise.then(function (callback, errback, progressback) {
+                $scope.useFacebook = callback.providers && callback.providers.indexOf("facebook") != -1;
+                $scope.useTwitter = callback.providers && callback.providers.indexOf("twitter") != -1;
+                $scope.useGoogle = callback.providers && callback.providers.indexOf("google") != -1;
+                $scope.autosend = callback.autosend;
+            });
             $scope.getOrResetAvailableProviders();
 		};
 
@@ -116,8 +107,15 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
         };
 
 		$scope.getProviders = function() {
-			$scope.availableProviders = [{name: 'facebook', enabled: false}, {name: 'twitter', enabled: false},
-				{name: 'google', enabled: false}, {name: 'linkedin', enabled: false}, {name: 'meetup', enabled: false}];
+            var providers = [{name: 'facebook', value: $scope.useFacebook}, {
+                name: 'twitter',
+                value: $scope.useTwitter
+            }, {name: 'google', value: $scope.useGoogle}].map(function (item) {
+                if (item.value) {
+                    return item.name;
+                }
+            });
+            return providers;
 		};
         $scope.availableProviders = $scope.getOrResetAvailableProviders();
 	}
