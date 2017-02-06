@@ -32,10 +32,40 @@ var getErrorMessage = function(err) {
 	return message;
 };
 
+// this shifts the time for the given timezone (e.g. +2 would add 2 hours, -10 would reduce 10 hours)
+var timeAccountedForTimezone = function(currentTime, timezone) {
+	// a trick to get miliseconds from Date object
+	return currentTime -0 + timezone * 3600 * 1000;
+}
+function getLocalTimeZone() {
+    return new Date().getTimezoneOffset() * -1 / 60;
+}
 var calculateBestTimeToSend = function (socialevent, user) {
-	// hard-code this for now
-	var userToSend = User.find();
-	return Date.now();
+	var targetTimeZone = socialevent.timeZone;
+    var localTimeZone = getLocalTimeZone();
+	// target best time is 12h - 15h, 13h preferably
+	// 13h - 15h for Facebook
+	// 15h for Twitter
+	// 12h - 13h for Google+
+	var targetHours = 13;
+	var bestTimeInLocalTimezone;
+	var localServerTime = Date.now();
+	var localTargetTime = new Date(timeAccountedForTimezone(localServerTime, targetTimeZone - localTimeZone));
+	if (localTargetTime.getHours() > targetHours) {
+		// set the sending time tomorrow for the target hour
+        localTargetTime.setHours(targetHours);
+        // we dont change the minutes but rather leave them at the minute mark the user has created the post
+        // this is done to ensure some entropy and not have thousands of posts all on 13:00, but rather
+        // distributed throughout 13:00 - 13:59
+        bestTimeInLocalTimezone = timeAccountedForTimezone(localTargetTime, +24);
+	} else {
+        localTargetTime.setHours(targetHours);
+        bestTimeInLocalTimezone = localTargetTime;
+	}
+	// now adjust the time for user timezone setting the appropriate time when the posts
+	// will be sent on server for server local time
+	var bestTime = timeAccountedForTimezone(bestTimeInLocalTimezone, localTimeZone - targetTimeZone);
+	return  bestTime;
 };
 /**
  * Create a article
@@ -76,6 +106,13 @@ exports.update = function(req, res) {
 	var socialevent = req.socialevent;
 
     socialevent = _.extend(socialevent, req.body);
+    if (!socialevent.isSent) {
+        if (socialevent.autosend) {
+            socialevent.bestTimeToSend = calculateBestTimeToSend(socialevent, req.user);
+        } else {
+            socialevent.bestTimeToSend = Date.now();
+        }
+    }
 
     socialevent.save(function(err) {
 		if (err) {

@@ -30,17 +30,23 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
             $scope.resetAvailableProvidersToUnused();
         }
 
-		$scope.create = function() {
+        function getTimeZone() {
+        	// we have to multiply by -1 to get a real time zone, as currently browsers return -60 for +1 timezone
+			return new Date().getTimezoneOffset() * -1 / 60;
+        }
+
+        $scope.create = function() {
             // TODO: change this to use lodash
             var providers = $scope.getProviders();
+            var timezone = getTimeZone();
 			var socialevent = new SocialEvents({
 				title: this.title,
-				// content: this.content,
 				providers: providers,
                 autosend: $scope.autosend,
                 isSent: false,
                 sent: null,
-                bestTimeToSend: null
+                bestTimeToSend: null,
+                timeZone: timezone
 			});
             socialevent.$save(function(response) {
 				$location.path('socialevents');
@@ -70,6 +76,7 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
             var providers = $scope.getProviders();
 			var socialevent = $scope.socialevent;
 			socialevent.providers = providers;
+            socialevent.timeZone = getTimeZone();
 
             socialevent.$update(function() {
 				$location.path('socialevents/' + socialevent._id);
@@ -114,6 +121,8 @@ angular.module('socialevents').controller('SocialEventsController', ['$scope', '
                 if (item.value) {
                     return item.name;
                 }
+            }).filter(function (item) {
+				return item;
             });
             return providers;
 		};

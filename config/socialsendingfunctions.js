@@ -18,7 +18,7 @@ function facebookFunction(post, user, callback, error) {
         accessToken = user.additionalProvidersData['facebook'].accessToken;
         expires = user.additionalProvidersData['facebook'].expires;
     }
-    // TODO: figure out how this works
+    // TODO: Need to get permissions from Facebook before proceeding further
     FB.setAccessToken(accessToken);
     if (Date.now() >= expires) {
         // Extend expiry time of the access token
@@ -67,7 +67,7 @@ function facebookFunction(post, user, callback, error) {
 function twitterFunction(post, user, callback, errorCallback) {
     var consumerKey,
         consumerSecret,
-        // TODO: figure out how to get this
+        // TODO: Need to get permissions from Twitter before proceeding further
         bearerToken = '';
     if (user.provider == 'twitter') {
         consumerKey = user.providerData.token;
@@ -105,7 +105,7 @@ function googleFunction(post, user, callback, errorCallback) {
             // contains an access_token and optionally a refresh_token.
             // save them permanently.
         });
-        // TODO: figure out how to get this
+        // TODO: Need to get permissions from Google before proceeding further
         oauth2Client.credentials = {
             access_token: 'ACCESS TOKEN HERE',
             refresh_token: 'REFRESH TOKEN HERE'

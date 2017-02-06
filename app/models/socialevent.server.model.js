@@ -41,12 +41,10 @@ var SocialEventSchema = new Schema({
 		trim: true,
 		required: 'Title cannot be blank'
 	},
-	// content: {
-	// 	type: String,
-	// 	default: '',
-	// 	trim: true,
-     //    required: 'Content cannot be blank'
-	// },
+	timeZone: {
+		type: Number,
+		default: 0
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
@@ -57,7 +55,7 @@ SocialEventSchema.index( {user : 1, created: 2 }, {unique:true, background:true,
 
 SocialEventSchema.pre('save', function (next) {
     this.sent = null;
-    this.sent = this.bestTimeToSend ? this.bestTimeToSend : null;
+    // this.sent = this.bestTimeToSend ? this.bestTimeToSend : null;
     this.isSent = false;
     next();
 })
