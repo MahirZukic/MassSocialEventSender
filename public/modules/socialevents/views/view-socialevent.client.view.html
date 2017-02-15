@@ -2,12 +2,12 @@
 	<div class="page-header">
 		<h1 data-ng-bind="socialevent.title"></h1>
 	</div>
+	<div>
+		<h5><a href="/#!/socialevents">Back</a></h5>
+	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == socialevent.user._id">
 		<a class="btn btn-primary" data-ng-show="!socialevent.isSent" data-ng-click="send();">
 			<i class="glyphicon glyphicon-send"></i>
-		</a>
-		<a class="btn btn-primary" href="/#!/socialevents/{{socialevent._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
 		</a>
 		<a class="btn btn-primary" data-ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
